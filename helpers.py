@@ -29,7 +29,7 @@ def get_settings():
         categories = [categories]
 
     data = {'categories': categories,
-            'src_root': 'https://{}.zendesk.com/api/v2/help_center'.format(settings['source_kb']),
+            'src_root': 'https://{}.zendesk.com/api/v2/help_center'.format(settings['src_kb']),
             'dst_root': 'https://{}.zendesk.com/api/v2/help_center'.format(settings['dst_kb']),
             'locale': settings['locale']}
     return data
