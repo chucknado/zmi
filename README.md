@@ -27,11 +27,17 @@ Run the following scripts in order. You can perform this procedure as many times
 
 1. Run the regular sync scripts one last time.
 2. Activate the destination Help Center.
-3. Deactivate the source categories and sections in the source Help Center.
-4. Run the subscription scripts:
+3. Activate redirects to the migrated content. See script.js. Copy the ids in js_redirects.txt to redirect function in theme JS.
+4. Run the archive article script.
+5. Activate "We've moved" articles.
+6. Run the subscription scripts:
     - `sync_subscriptions_sections`
     - `sync_subscriptions_articles`
 
 Don't make any more syncs after the syncing the subscriptions.
+
+#### D-day +30 days
+
+- Deactivate the source categories and sections in the source Help Center.
 
 If the old HC is not deactivated, set up redirects in it to the migrated content. See script.js. Copy the ids in js_redirects.txt to redirect function in theme JS.

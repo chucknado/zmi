@@ -25,6 +25,7 @@ for src_article in article_map:
             url = '{}/articles/{}/subscriptions.json'.format(dst_root, dst_article)
             payload = {"subscription": {"source_locale": locale, "user_id": sub['user_id']}}
             post_resource(url, payload)
+            # delete old subscription?
 
 utc = arrow.utcnow()
 sync_dates['subscriptions_articles'] = utc.format()
