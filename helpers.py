@@ -216,3 +216,21 @@ def put_resource(url, data):
     if type(resource) is dict:
         return resource
     return None
+
+
+def delete_resource(url):
+    """
+    Runs a DELETE request on any Delete endpoint in the Zendesk API
+    :param url: A full endpoint url, such as 'https://support.zendesk.com/api/v2/help_center/articles/2342572.json'
+    :return: If successful, a 204 status code. If not, None
+    """
+    response = requests.delete(url, auth=get_auth())
+    if response.status_code == 429:
+        print('Rate limited! Please wait.')
+        time.sleep(int(response.headers['retry-after']))
+        response = requests.delete(url, auth=get_auth())
+    if response.status_code != 204:
+        print('Failed to delete record with error {}'.format(response.status_code))
+        print(response.text)
+        exit()
+    return None
