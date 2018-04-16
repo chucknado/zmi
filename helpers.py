@@ -19,17 +19,7 @@ def get_settings():
     config = configparser.ConfigParser()
     config.read('settings.ini')
     settings = config['DEFAULT']
-
-    categories = settings['src_categories']
-    if categories == '':
-        categories = []
-    elif ',' in categories:
-        categories = categories.split(',')
-    else:
-        categories = [categories]
-
-    data = {'categories': categories,
-            'src_root': 'https://{}.zendesk.com/api/v2/help_center'.format(settings['src_kb']),
+    data = {'src_root': 'https://{}.zendesk.com/api/v2/help_center'.format(settings['src_kb']),
             'dst_root': 'https://{}.zendesk.com/api/v2/help_center'.format(settings['dst_kb']),
             'locale': settings['locale'],
             'src_archive': settings['src_archive']}

@@ -9,7 +9,7 @@ The tools add and update the content incrementally based on the timestamp of the
 #### Prep
 
 1. Manually create the categories and sections in the destination KB.
-2. Create a section map of section ids from the source KB and their corresponding ids in the destination KB. The map is used for migrating the articles to the correct sections in the destination KB.
+2. Create a section map of section ids from the source KB and their corresponding ids in the destination KB. The sections can be in any category. The map is used for migrating the articles to the correct sections in the destination KB.
 
 #### Syncing
 
