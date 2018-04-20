@@ -23,6 +23,8 @@ for src_article in article_map:
         print('- no comments found')
         continue
     for src_comment in comments:
+        if src_comment['body'] == '':
+            continue
         if last_sync < arrow.get(src_comment['created_at']):
             print('- adding new comment {} to article {}'.format(src_comment['id'], dst_article))
             url = '{}/articles/{}/comments.json'.format(dst_root, dst_article)

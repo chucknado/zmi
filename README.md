@@ -10,6 +10,9 @@ The tools add and update the content incrementally based on the timestamp of the
 
 1. Manually create the categories and sections in the destination KB.
 2. Create a section map of section ids from the source KB and their corresponding ids in the destination KB. The sections can be in any category. The map is used for migrating the articles to the correct sections in the destination KB.
+3. Create a general "Team" user in Support and make the user an agent. Assign the user id to in the settings.ini file.
+
+	Articles in HC can't be authored by end users. If an author leaves the company, they're demoted to end user in Zendesk. Trying to recreate the article elsewhere with the same author causes an error.
 
 #### Syncing
 
@@ -18,7 +21,7 @@ Run the following scripts in order. You can perform this procedure as many times
 **Note**: Don't sync the subscriptions until after the HC goes live and the content has been synced the final time. Because users are notified when somebody adds an article to a section or adds a comment to an article, syncing the subscriptions before a content sync could be a bad experience for users.
 
 1. Run `sync_articles.py`.
-2. Run `sync_comments.py`.
+2. Run `sync_comments_articles.py`.
 3. Run the following scripts in any order:
     - `sync_votes_articles.py`
     - `sync_votes_comments.py`

@@ -1,25 +1,25 @@
 import arrow
 
 from helpers import read_data, write_data, get_settings, package_article, get_resource_list, \
-    post_resource, put_resource, write_js_redirects
+    post_resource, put_resource, verify_author, write_js_redirects
 
 
 settings = get_settings()
 src_root = settings['src_root']
 dst_root = settings['dst_root']
 locale = settings['locale']
+team_user = settings['team_user']
 sync_dates = read_data('sync_dates')
 last_sync = arrow.get(sync_dates['articles'])
 section_map = read_data('section_map')
 article_map = read_data('article_map')
 exceptions = read_data('exceptions')
 
+
 for section in section_map:
-
-    # test-only section (ref docs) -> comment out for sync
-    if section != "206223848":
-        continue
-
+    # # test-only section (ref docs) -> comment out for sync
+    # if section != "206223768":
+    #     continue
     dst_section = section_map[section]
     print('\nGetting articles in section {}...'.format(section))
     url = '{}/{}/sections/{}/articles.json'.format(src_root, locale, section)
@@ -30,6 +30,7 @@ for section in section_map:
             continue
         if last_sync < arrow.get(src_article['created_at']):
             print('- adding article {} to destination section {}'.format(src_article['id'], dst_section))
+            src_article['author_id'] = verify_author(src_article['author_id'], team_user)
             url = '{}/{}/sections/{}/articles.json'.format(dst_root, locale, dst_section)
             payload = package_article(src_article)
             new_article = post_resource(url, payload)

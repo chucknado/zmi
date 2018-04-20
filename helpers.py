@@ -22,7 +22,8 @@ def get_settings():
     data = {'src_root': 'https://{}.zendesk.com/api/v2/help_center'.format(settings['src_kb']),
             'dst_root': 'https://{}.zendesk.com/api/v2/help_center'.format(settings['dst_kb']),
             'locale': settings['locale'],
-            'src_archive': settings['src_archive']}
+            'src_archive': settings['src_archive'],
+            'team_user': settings['team_user']}
     return data
 
 
@@ -98,6 +99,23 @@ def package_comment(comment, put=False):
             'created_at': comment['created_at']
         }
     return {'comment': package, 'notify_subscribers': False}
+
+
+def verify_author(author_id, team_author_id):
+    """
+    Checks to see if article's author is an end user, who can't publish to HC. If yes, replace with the generic
+    Zendesk team user set in settings.ini.
+    :param author_id: The author's id
+    :param team_author_id: The user id of a generic agent in Zendesk
+    :return: The id of an author who is not an end user
+    """
+    url = 'https://support.zendesk.com/api/v2/users/{}.json'.format(author_id)
+    user = get_resource(url)
+    role = user['role']
+    if role == 'end-user':
+        return int(team_author_id)
+    else:
+        return author_id
 
 
 def write_js_redirects(article_map):
