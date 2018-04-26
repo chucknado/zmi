@@ -4,43 +4,66 @@ The tools migrate knowledge base content from one Zendesk Help Center to another
 
 The tools add and update the content incrementally based on the timestamp of the last sync.
 
-### Steps
+### Set up
 
-#### Prep
+1. Manually create matching categories and sections in the destination KB.
 
-1. Manually create the categories and sections in the destination KB.
-2. Create a section map of section ids from the source KB and their corresponding ids in the destination KB. The sections can be in any category. The map is used for migrating the articles to the correct sections in the destination KB.
-3. Create a general "Team" user in Support and make the user an agent. Assign the user id to in the settings.ini file.
+2. In **/data/section_map.json**, define a dictionary of section ids from the source KB and their corresponding ids in the destination KB. The sections can be in any category. The map is used for migrating the articles to the correct sections in the destination KB.
+
+	```
+	{
+      "115002917448": 360000007167,
+      "206223848": 360000007068,
+      ...
+    }
+	```
+
+3. Create a general "Team" user in Support and make the user an agent. You'll assign the user id to in the **settings.ini** file.
 
 	Articles in HC can't be authored by end users. If an author leaves the company, they're demoted to end user in Zendesk. Trying to recreate the article elsewhere with the same author causes an error.
 
-#### Syncing
+4. Specify all the values in the **settings.ini** file.
+
+	```
+	[DEFAULT]
+    src_kb=acme
+    src_archive=115002643988
+    dst_kb=bravo
+    locale=en-us
+    team_user=13589481088
+	```
+
+### Initial sync
 
 Run the following scripts in order. You can perform this procedure as many times are needed on any schedule. 
 
 **Note**: Don't sync the subscriptions until after the HC goes live and the content has been synced the final time. Because users are notified when somebody adds an article to a section or adds a comment to an article, syncing the subscriptions before a content sync could be a bad experience for users.
 
-1. Run `sync_articles.py`.
-2. Run `sync_comments_articles.py`.
+1. In your command-line interface, navigate to the **zmt** folder.
+1. Run `$ python3 sync_articles.py`.
+2. Run `$ python3 sync_comments_articles.py`.
 3. Run the following scripts in any order:
-    - `sync_votes_articles.py`
-    - `sync_votes_comments.py`
+    - `$ python3 sync_votes_articles.py`
+    - `$ python3 sync_votes_comments.py`
 
-#### D-day
+
+### Final sync
 
 1. Run the regular sync scripts one last time.
 2. Activate the destination Help Center.
-3. Activate redirects to the migrated content. See script.js. Copy the ids in js_redirects.txt to redirect function in theme JS.
-4. Run the archive article script.
-5. Activate "We've moved" articles.
-6. Run the subscription scripts:
-    - `sync_subscriptions_sections`
-    - `sync_subscriptions_articles`
+3. Run the subscription scripts:
+    - `$ python3 sync_subscriptions_sections`
+    - `$ python3 sync_subscriptions_articles`
+4. Add the ids in **/data/js_redirect.txt** to the `idMap` variable in **script-articles.html**.
+5. Add the script in **redirect_script.html** to the Document Head template in the destionation HC theme, and make the theme live. This activates the article redirects.
+5. Publish a "We moved" article in each section in the source HC.
+6. Run `$ python3 archive_articles.py`.
+8. Publish HC announcement in dst.zendesk.com out of draft.
 
 Don't make any more syncs after the syncing the subscriptions.
 
-#### D-day +30 days
 
-- Deactivate the source categories and sections in the source Help Center.
+### Post migration
 
-If the old HC is not deactivated, set up redirects in it to the migrated content. See script.js. Copy the ids in js_redirects.txt to redirect function in theme JS.
+- Update any external links to the moved content.
+- Deactivate the source categories and sections in the source Help Center after 30 days.

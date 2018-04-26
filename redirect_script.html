@@ -1,0 +1,33 @@
+<!-- Update idMap and add script tag in Document Head template of source HC's theme -->
+
+<!-- ARTICLE REDIRECTS -->
+<script>
+  /*
+  Redirects HTTP requests for the articles in the source HC to the corresponding articles in the
+  destination HC.
+  Bug: 'https://some_url.com#anchor' -> script doesn't recognize the id so ignores redirect
+  */
+  function getRedirectHref(src_href) {
+    var idMap = {115000174147:360001075328,115000590867:360001075288,115000728587:360001069507,115000734927:360001074908,115001264848:360001069607,115002036967:360001074348,115002707247:360001069587,115004172167:360001075228,115004307907:360001069547,115004824888:360001075188,115005428828:360001068807
+    };
+    var src_root = 'source.zendesk.com';
+    var dst_root = 'destination.zendesk.com';
+    var partial = src_href.split('/en-us/articles/')[1];
+    var srcId = partial.split('-')[0];
+    var dstId = idMap[srcId];
+    if (dstId !== undefined) {
+      var dst_href = src_href.replace(srcId, dstId);
+      dst_href = dst_href.replace(src_root, dst_root);
+      return dst_href;
+    }
+  }
+
+  var location_href = window.location.href;
+  if (location_href.indexOf('/en-us/articles/') > -1) {
+    var redirect_href = getRedirectHref(location_href);
+    if (redirect_href !== undefined) {
+      location.href = redirect_href;
+    }
+  }
+</script>
+<!-- END ARTICLE REDIRECTS -->
