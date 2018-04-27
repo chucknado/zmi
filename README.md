@@ -33,6 +33,13 @@ The tools add and update the content incrementally based on the timestamp of the
     team_user=13589481088
 	```
 
+5. Update the auth.py file with your Zendesk username and API token:
+
+    ```
+    def get_auth():
+        return '{}/token'.format('jdoe@example.com'), '9a8b7c6d5e4f3g2h1'
+    ```
+
 ### Initial sync
 
 Run the following scripts in order. You can perform this procedure as many times are needed on any schedule. 
