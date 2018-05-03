@@ -4,6 +4,8 @@ The tools migrate knowledge base content from one Zendesk Help Center to another
 
 The tools add and update the content incrementally based on the timestamp of the last sync.
 
+**Limitation**: The tools don't migrate non-linline attachments or rewrite links to attachments in articles. The functionality is planned.
+
 ### Set up
 
 1. Manually create matching categories and sections in the destination KB.

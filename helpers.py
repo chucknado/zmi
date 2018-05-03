@@ -8,33 +8,31 @@ import requests
 from auth import get_auth
 
 
-# ----- Variables ----- #
-
-data_path = 'data'
-
-
 # ----- Functions ----- #
 
 def get_settings():
     config = configparser.ConfigParser()
     config.read('settings.ini')
-    settings = config['DEFAULT']
-    data = {'src_root': 'https://{}.zendesk.com/api/v2/help_center'.format(settings['src_kb']),
-            'dst_root': 'https://{}.zendesk.com/api/v2/help_center'.format(settings['dst_kb']),
-            'locale': settings['locale'],
-            'src_archive': settings['src_archive'],
-            'team_user': settings['team_user']}
-    return data
+    default = config['DEFAULT']
+    settings = {'src_root': 'https://{}.zendesk.com/api/v2/help_center'.format(default['src_kb']),
+                'dst_root': 'https://{}.zendesk.com/api/v2/help_center'.format(default['dst_kb']),
+                'locale': default['locale'],
+                'src_archive': default['src_archive'],
+                'team_user': default['team_user']}
+    return settings
 
 
-def read_data(resources):
+def read_data(file_name):
     """
     Reads a .json file and converts it to a Python data structure
-    :param resources: One of "articles", "sections", "comments", "subscriptions", "votes"
+    :param file_name: File in the data folder. Omit the .json extension. One of "articles", "sections",
+     "comments", "subscriptions", "votes"
     :return: Python data structure
     """
-    # check if file exists; if not, return False
-    file_path = os.path.join(data_path, f'{resources}.json')
+    file_path = os.path.join('data', f'{file_name}.json')
+    if os.path.isfile(file_path) is False:
+        print(f'File does not exist: {file_name}')
+        exit()
     with open(file_path, mode='r') as f:
         data = json.load(f)
     return data
@@ -47,7 +45,7 @@ def write_data(data, resources):
     :param resources: One of "articles", "sections", "comments", "subs", etc
     :return: None
     """
-    file_path = os.path.join(data_path, f'{resources}.json')
+    file_path = os.path.join('data', f'{resources}.json')
     with open(file_path, mode='w') as f:
         json.dump(data, f, sort_keys=True, indent=2)
 
@@ -124,7 +122,7 @@ def write_js_redirects(article_map):
     :param article_map: Dict of old:new article ids
     :return: None
     """
-    file_path = os.path.join(data_path, 'js_redirects.txt')
+    file_path = os.path.join('data', 'js_redirects.txt')
     counter = 1
     with open(file_path, mode='w') as f:
         for article in article_map:
