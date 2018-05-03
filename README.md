@@ -48,7 +48,7 @@ Run the following scripts in order. You can perform this procedure as many times
 
 **Note**: Don't sync the subscriptions until after the HC goes live and the content has been synced the final time. Because users are notified when somebody adds an article to a section or adds a comment to an article, syncing the subscriptions before a content sync could be a bad experience for users.
 
-1. In your command-line interface, navigate to the **zmt** folder.
+1. In your command-line interface, navigate to the **zmi** folder.
 1. Run `$ python3 sync_articles.py`.
 2. Run `$ python3 sync_comments_articles.py`.
 3. Run the following scripts in any order:
