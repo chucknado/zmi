@@ -1,4 +1,5 @@
-from helpers import read_data, get_settings, put_resource
+from helpers import read_data, get_settings
+import api
 
 
 settings = get_settings()
@@ -11,4 +12,6 @@ for src_article in article_map:
     print('Archiving {}...'.format(src_article))
     url = '{}/{}/articles/{}.json'.format(src_root, locale, src_article)
     payload = {'article': {'section_id': int(src_archive)}}
-    put_resource(url, payload)
+    response = api.put_resource(url, payload)
+    if response is False:
+        print('Skipping article {}'.format(src_article))
