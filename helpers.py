@@ -70,7 +70,8 @@ def package_article(article, put=False):
             'label_names': article['label_names'],
             'draft': article['draft'],
             'promoted': article['promoted'],
-            'position': article['position']
+            'position': article['position'],
+            'user_segment_id': None
         }
         return {'article': package}
 
