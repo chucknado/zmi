@@ -97,6 +97,21 @@ def package_comment(comment, put=False):
     return {'comment': package, 'notify_subscribers': False}
 
 
+def package_translation(data):
+    """
+    Creates the payload for a POST translation request.
+    :param data: Complete translation dict from API
+    :return: Abridged translation dict
+    """
+    package = {
+        'locale': data['locale'],
+        'title': data['title'],
+        'body': data['body'],
+        'draft': data['draft'],
+    }
+    return {'translation': package}
+
+
 def verify_author(author_id, team_author_id):
     """
     Checks to see if article's author is an end user, who can't publish to HC. If yes, replace with the generic
