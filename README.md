@@ -49,9 +49,9 @@ Run the following scripts in order. You can perform this procedure as many times
 **Note**: Don't sync the subscriptions until after the HC goes live and the content has been synced the final time. Because users are notified when somebody adds an article to a section or adds a comment to an article, syncing the subscriptions before a content sync could be a bad experience for users.
 
 1. In your command-line interface, navigate to the **zmi** folder.
-1. Run `$ python3 sync_articles.py`.
-2. Run `$ python3 sync_comments_articles.py`.
-3. Run the following scripts in any order:
+2. Run `$ python3 sync_articles.py`.
+3. Run `$ python3 sync_comments_articles.py`.
+4. Run the following scripts in any order:
     - `$ python3 sync_votes_articles.py`
     - `$ python3 sync_votes_comments.py`
 
@@ -61,12 +61,14 @@ Run the following scripts in order. You can perform this procedure as many times
 1. Run the regular sync scripts one last time.
 2. Activate the destination Help Center.
 3. Run the subscription scripts:
-    - `$ python3 sync_subscriptions_sections`
-    - `$ python3 sync_subscriptions_articles`
-4. Add the ids in **/data/js_redirect.txt** to the `idMap` variable in **script-articles.html**.
-5. Add the script in **redirect_script.html** to the Document Head template in the destionation HC theme, and make the theme live. This activates the article redirects.
+    - `$ python3 sync_subscriptions_sections.py`
+    - `$ python3 sync_subscriptions_articles.py`
+4, Move the translations (if any) by running:
+    - `$ python3 move_translations.py`
+5. Add the ids in **/data/js_redirect.txt** to the `idMap` variable in **script-articles.html**.
+6. Add the script in **redirect_script.html** to the Document Head template in the destionation HC theme, and make the theme live. This activates the article redirects.
 5. Publish a "We moved" article in each section in the source HC.
-6. Run `$ python3 archive_articles.py`.
+6. Run `$ python3 archive_articles.py`. [CHANGE TO DELETE]
 8. Publish HC announcement in dst.zendesk.com out of draft.
 
 Don't make any more syncs after the syncing the subscriptions.
