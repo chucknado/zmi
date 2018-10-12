@@ -10,8 +10,7 @@ article_map = read_data('article_map')
 
 for src_article in article_map:
     print('Archiving {}...'.format(src_article))
-    url = '{}/{}/articles/{}.json'.format(src_root, locale, src_article)
-    payload = {'article': {'section_id': int(src_archive)}}
-    response = api.put_resource(url, payload)
-    if response is False:
-        print('Skipping article {}'.format(src_article))
+
+    # DELETE / api / v2 / help_center / articles / {id}.json
+    url = '{}/articles/{}.json'.format(src_root, src_article)
+    api.delete_resource(url)
