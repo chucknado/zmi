@@ -59,16 +59,24 @@ Run the following scripts in order. You can perform this procedure as many times
 ### Final sync
 
 1. Run the regular sync scripts one last time.
+
 2. Activate the destination Help Center.
+
 3. Run the subscription scripts:
     - `$ python3 sync_subscriptions_sections.py`
     - `$ python3 sync_subscriptions_articles.py`
-4, Move the translations (if any) by running:
+
+4. Move any article translations by running:
     - `$ python3 move_translations.py`
+
 5. Add the ids in **/data/js_redirect.txt** to the `idMap` variable in **script-articles.html**.
-6. Add the script in **redirect_script.html** to the Document Head template in the destionation HC theme, and make the theme live. This activates the article redirects.
+
+6. Add the script in **redirect_script.html** to the Document Head template in the destination HC theme, and make the theme live. This activates the article redirects.
+
 5. Publish a "We moved" article in each section in the source HC.
+
 6. Run `$ python3 archive_articles.py`. [CHANGE TO DELETE]
+
 8. Publish HC announcement in dst.zendesk.com out of draft.
 
 Don't make any more syncs after the syncing the subscriptions.
