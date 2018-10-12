@@ -12,6 +12,7 @@ for article in article_map:
     for locale in locales:
         if locale in missing_locales:   # if translation missing in src, nothing to move
             continue
+        print('Moving {} translation for article {}'.format(locale, article))
 
         # get translation in src hc
         url = '{}/articles/{}/translations/{}.json'.format(settings['src_root'], article, locale)
@@ -20,7 +21,6 @@ for article in article_map:
         # create translation in dest hc
         url = '{}/articles/{}/translations.json'.format(settings['dst_root'], article_map[article])
         payload = package_translation(translation)
-        r = api.post_resource(url, payload)
-        if r is False:
-            print('Skipping {} translation for article {}'.format(locale, article))
-            continue
+        api.post_resource(url, payload)
+
+print('\nFinished moving translations.\n')
