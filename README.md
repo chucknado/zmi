@@ -4,11 +4,13 @@ The tools migrate knowledge base content from one Zendesk Help Center to another
 
 The tools add and update the content incrementally based on the timestamp of the last sync.
 
-**Limitation**: The tools don't migrate non-linline attachments or rewrite links to attachments in articles. The functionality is planned.
+**Limitation**: The tools don't migrate non-linline attachments or rewrite links to attachments in articles.
 
 ### Set up
 
 1. Manually create matching categories and sections in the destination KB.
+
+	If the articles have translations, make sure to create matching category and section translations in the destination KB. 
 
 2. In **/data/section_map.json**, define a dictionary of section ids from the source KB and their corresponding ids in the destination KB. The sections can be in any category. The map is used for migrating the articles to the correct sections in the destination KB.
 
@@ -35,7 +37,7 @@ The tools add and update the content incrementally based on the timestamp of the
     team_user=13589481088
 	```
 
-5. Update the auth.py file with your Zendesk username and API token:
+5. Update the **auth.py** file with your Zendesk username and API token:
 
     ```
     def get_auth():
@@ -63,29 +65,39 @@ Run the following scripts in order. You can perform this procedure as many times
 
 1. Run the regular sync scripts one last time.
 
-2. Activate the destination Help Center.
+2. Move any article translations by running:
+    - `$ python3 move_translations.py`
 
-3. Run the subscription scripts:
+3. Activate the destination Help Center.
+
+4. Run the subscription scripts:
     - `$ python3 sync_subscriptions_sections.py`
     - `$ python3 sync_subscriptions_articles.py`
 
-4. Move any article translations by running:
-    - `$ python3 move_translations.py`
+5. Add the ids in **/data/js_redirect.txt** to the DOC REDIRECTS function in the **script.js** file in the source HC theme.
 
-5. Add the ids in **/data/js_redirect.txt** to the `idMap` variable in **script-articles.html**.
+    See **redirect_script.js** in the source files of this project for an example of the script.
 
-6. Add the script in **redirect_script.html** to the Document Head template in the destination HC theme, and make the theme live. This activates the article redirects.
+6. Run `$ python3 delete_articles.py`.
 
-5. Publish a "We moved" article in each section in the source HC.
-
-6. Run `$ python3 archive_articles.py`. [CHANGE TO DELETE]
-
-8. Publish HC announcement in dst.zendesk.com out of draft.
+    Articles must be deleted, not just restricted by user segment, to be able to redirect from the 404 page. Deleted articles in HC are soft deleted and can be restored.
 
 Don't make any more syncs after the syncing the subscriptions.
 
 
 ### Post migration
 
-- Update any external links to the moved content.
-- Deactivate the source categories and sections in the source Help Center after 30 days.
+Update any external links to the moved content.
+
+If a source section is now empty, you can delete it. If you decide to delete it, you can set up a redirect to the new section.
+
+**To add redirects to the section landing page**
+
+1. Add the source and destination section ids to the DOC REDIRECTS function in the **script.js** file in the source HC theme.
+
+	See **redirect_script.js** in the source files of this project for an example of the script.
+
+2. Manually delete the source section.
+
+
+
