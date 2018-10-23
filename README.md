@@ -22,7 +22,7 @@ The tools add and update the content incrementally based on the timestamp of the
     }
 	```
 
-3. Create a general "Team" user in Support and make the user an agent. You'll assign the user id to in the **settings.ini** file.
+3. Create a general "Team" user in the target Help Center and make the user an agent. You'll assign the user id to in the **settings.ini** file.
 
 	Articles in HC can't be authored by end users. If an author leaves the company, they're demoted to end user in Zendesk. Trying to recreate the article elsewhere with the same author causes an error.
 
