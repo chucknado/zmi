@@ -4,7 +4,6 @@ import api
 
 settings = get_settings()
 src_root = settings['src_root']
-src_archive = settings['src_archive']
 locale = settings['locale']
 article_map = read_data('article_map')
 
