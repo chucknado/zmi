@@ -14,7 +14,6 @@ def get_settings():
     settings = {'src_root': 'https://{}.zendesk.com/api/v2/help_center'.format(default['src_kb']),
                 'dst_root': 'https://{}.zendesk.com/api/v2/help_center'.format(default['dst_kb']),
                 'locale': default['locale'],
-                'src_archive': default['src_archive'],
                 'team_user': default['team_user']}
     return settings
 
