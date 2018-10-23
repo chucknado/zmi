@@ -31,7 +31,6 @@ The tools add and update the content incrementally based on the timestamp of the
 	```
 	[DEFAULT]
     src_kb=acme
-    src_archive=115002643988
     dst_kb=bravo
     locale=en-us
     team_user=13589481088
