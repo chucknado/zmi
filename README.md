@@ -6,6 +6,12 @@ The tools add and update the content incrementally based on the timestamp of the
 
 **Limitation**: The tools don't migrate non-linline attachments or rewrite links to attachments in articles.
 
+### Requirements
+
+- [Python 3.6 or higher](https://www.python.org/)
+- [requests](http://docs.python-requests.org/en/master/)
+- [arrow](https://arrow.readthedocs.io/en/latest/)
+
 ### Set up
 
 1. Manually create matching categories and sections in the destination KB.
