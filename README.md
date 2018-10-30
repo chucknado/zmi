@@ -4,13 +4,21 @@ The tools migrate knowledge base content from one Zendesk Help Center to another
 
 The tools add and update the content incrementally based on the timestamp of the last sync.
 
-**Limitation**: The tools don't migrate non-linline attachments or rewrite links to attachments in articles.
+**Limitation**: The tools don't migrate non-inline attachments or rewrite links to attachments in articles.
+
+
+### Terms of use
+
+This project is a private open-source project. It's not supported by Zendesk in any way. See the license for the terms of use.
+
 
 ### Requirements
 
 - [Python 3.6 or higher](https://www.python.org/)
 - [requests](http://docs.python-requests.org/en/master/)
 - [arrow](https://arrow.readthedocs.io/en/latest/)
+
+
 
 ### Set up
 
