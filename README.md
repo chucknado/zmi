@@ -9,7 +9,7 @@ The tools add and update the content incrementally based on the timestamp of the
 
 ### Terms of use
 
-This project is a private open-source project. It's not supported by Zendesk in any way. See the license for the terms of use.
+This project is a private open-source project. It's not supported by Zendesk in any way. See the [license](https://github.com/chucknado/zmi/blob/master/LICENSE) for the terms of use.
 
 
 ### Requirements
